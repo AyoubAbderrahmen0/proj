@@ -23,7 +23,6 @@ const isAuth = async (req,res,next) =>{
         next()
     } catch (error) {
         // res.status(200).send(error)
-        console.log(error)
     }
     }
     

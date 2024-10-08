@@ -45,7 +45,6 @@ exports.login=async(req,res)=>{
         }
     } catch (error) {
         res.status(500).send({msg:"error on login",error})
-        console.log(error)
     }
 }
 
@@ -73,7 +72,6 @@ exports.resetPassword = async (req, res) => {
         res.status(200).send({ msg: "Password updated successfully!" });
     } catch (error) {
         res.status(500).send({ msg: "Error on updating password", error });
-        console.log(error)
     }
 }
 

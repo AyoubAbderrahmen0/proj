@@ -27,7 +27,7 @@ const user= new schema ({
     },
     photo:{
         type:String
-    }
+    },
 })
 
 module.exports=mongoose.model("user",user)

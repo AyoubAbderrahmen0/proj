@@ -8,7 +8,7 @@ const app=express()
 //middleware
 app.use(express.json())
 
-const cors=require("cors"); 
+const cors=require("cors"); //access to send requests
 const corsOptions ={ origin:'*', credentials:true, //access-control-allow-credentials:true
  optionSuccessStatus:200, } 
  app.use(cors(corsOptions))
@@ -22,3 +22,6 @@ app.listen(process.env.PORT,(error)=>{
 })
 
 app.use("/api/user",require("./Routes/user"))
+app.use("/api/product",require("./Routes/Product"))
+
+//http://localhost:8000/

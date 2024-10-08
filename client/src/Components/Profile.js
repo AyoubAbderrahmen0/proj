@@ -10,50 +10,54 @@ const Profile = () => {
   const user = useSelector(state => state.UserReducer.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [bool, setbool] = useState(false);
-  const [newpass, setNewpass] = useState("");
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
 
-  const handlebool = () => {
-    setbool(!bool);
+  const togglePasswordForm = () => {
+    setShowPasswordForm(!showPasswordForm);
   };
 
-  const del = async () => {
+  const handleDelete = async () => {
     await dispatch(deleteUser(user._id));
     navigate("/");
   };
 
-  const changePass = async () => {
-      await dispatch(resetPasswordUser(user._id,newpass));
-      setbool(false)
+  const handleChangePassword = async () => {
+    await dispatch(resetPasswordUser(user._id, newPassword));
+    setShowPasswordForm(false);
   };
 
-  useEffect(()=>{
-    if(!user){
-      navigate("/login")
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
     }
-  },[user])
+  }, [user, navigate]);
 
   return (
-    <div>
-      <h1>Profile</h1>
-      <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" src={user?.photo} />
+    <div className="container mt-5">
+      <h1 className="mb-4 text-center">Profile</h1>
+      <Card className="mx-auto" style={{ width: '18rem' }}>
+        {user?.photo && <Card.Img variant="top" src={user.photo} />}
         <Card.Body>
           <Card.Title>{user?.username}</Card.Title>
-          <Card.Title>Email: {user?.email}</Card.Title>
+          <Card.Text>Email: {user?.email}</Card.Text>
           <Card.Text>Age: {user?.age}</Card.Text>
           <Card.Text>Phone: {user?.phone}</Card.Text>
-          <Button variant="primary" onClick={del}>Delete</Button>
-          <Button variant="primary" onClick={handlebool}>Modify Password</Button>
-          {bool && (
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+          <div className="d-flex justify-content-between">
+            <Button variant="danger" onClick={handleDelete}>Delete Account</Button>
+            <Button variant="info" onClick={togglePasswordForm}>
+              {showPasswordForm ? "Cancel" : "Modify Password"}
+            </Button>
+          </div>
+          {showPasswordForm && (
+            <Form.Group className="mt-3" controlId="formNewPassword">
               <Form.Label>New Password</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Enter new password"
-                onChange={(e) => setNewpass(e.target.value)}
+                onChange={(e) => setNewPassword(e.target.value)}
               />
-              <Button variant="primary" onClick={changePass}>Send</Button>
+              <Button variant="primary" className="mt-2" onClick={handleChangePassword}>Update Password</Button>
             </Form.Group>
           )}
         </Card.Body>

@@ -1,8 +1,7 @@
 
-
-
-
 //initialState
+
+import { toast } from "react-toastify";
 
 const { LOAD_USER, LOGIN_USER, REGISTER_USER, DELETE_USER, RESET_PASSWORD, ERROR_USER, CURRENT_USER, LOGOUT_USER } = require("../ActionTypes/ActionTypes");
 
@@ -22,9 +21,11 @@ const UserReducer=(state=initialState,{type,payload})=>{
             return{...state,load:true}
         case LOGIN_USER:
             localStorage.setItem("token",payload.token)
+            toast(payload.msg);
             return{...state,user:payload.foundUser,load:false}
         case LOGOUT_USER:
             localStorage.removeItem("token")
+            toast("Logout successfully")
                 return{...state,user:null,load:false}
         case REGISTER_USER:
             localStorage.setItem("token",payload.token)
